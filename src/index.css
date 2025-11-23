@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS vars for brand */
+:root {
+  --lux-cream: #F8F5EF;
+  --lux-gold: #C9A86A;
+  --lux-gold-600: #B88F4E;
+  --lux-deep: #1A1A1A;
+  --lux-softgray: #4A4A4A;
+}
+
+/* Font defaults */
+html { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* Luxury Headings */
+h1, h2, h3, h4 {
+  font-family: "Playfair Display", serif;
+}
+
+/* Luxury Button */
+.btn-lux {
+  @apply inline-block rounded-full px-8 py-3 font-semibold;
+  
+  /* Real styling (CSS handles vars) */
+  color: var(--lux-deep);
+  background: linear-gradient(180deg, var(--lux-gold) 0%, var(--lux-gold-600) 100%);
+  box-shadow: 0 10px 30px rgba(201,168,106,0.18);
+}
+
+/* Focus ring */
+:focus {
+  outline: 2px solid rgba(201,168,106,0.25);
+  outline-offset: 3px;
+}
+
+/* Smooth image transform */
+img {
+  transition: transform 0.6s ease;
+}
+
+/* Body background for luxury cream */
+body {
+  background-color: var(--lux-cream);
+  color: var(--lux-deep);
+}
+
+/* Dark mode ultra-lux */
+.dark body {
+  background-color: #0b0b0b;
+  color: #eee;
+}
+.font-lux {
+  font-family: "Cormorant Garamond", serif;
+}
+
