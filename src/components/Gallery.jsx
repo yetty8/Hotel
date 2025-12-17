@@ -29,7 +29,7 @@ export default function Gallery() {
       ></motion.div>
 
       {/* Image Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6">
         {images.map((img, i) => (
           <motion.div
             key={i}
@@ -46,14 +46,16 @@ export default function Gallery() {
               backdrop-blur-sm
             "
           >
-            <div className="overflow-hidden">
+            <div className="relative w-full" style={{ paddingBottom: '75%' }}> {/* 4:3 Aspect Ratio */}
               <img
                 src={img}
                 alt={`Gallery ${i + 1}`}
                 className="
-                  w-full h-72 object-cover 
+                  absolute inset-0
+                  w-full h-full object-cover 
                   group-hover:scale-110 
                   transition-transform duration-700
+                  gallery-image
                 "
               />
             </div>

@@ -13,47 +13,165 @@
   --lux-softgray: #4A4A4A;
 }
 
-/* Font defaults */
-html { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+/* Base styles */
+html {
+  font-size: 16px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
-/* Luxury Headings */
-h1, h2, h3, h4 {
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+}
+
+h1 { font-size: 2.25rem; }  /* 36px */
+h2 { font-size: 1.875rem; } /* 30px */
+h3 { font-size: 1.5rem; }   /* 24px */
+h4 { font-size: 1.25rem; }  /* 20px */
+
+/* Responsive typography */
+@media (min-width: 640px) {
+  html { font-size: 16px; }
+  h1 { font-size: 3rem; }      /* 48px */
+  h2 { font-size: 2.25rem; }   /* 36px */
+  h3 { font-size: 1.75rem; }   /* 28px */
 }
 
 /* Luxury Button */
 .btn-lux {
-  @apply inline-block rounded-full px-8 py-3 font-semibold;
-  
-  /* Real styling (CSS handles vars) */
+  @apply inline-block rounded-full px-6 py-3 font-semibold text-base;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--lux-deep);
   background: linear-gradient(180deg, var(--lux-gold) 0%, var(--lux-gold-600) 100%);
   box-shadow: 0 10px 30px rgba(201,168,106,0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
-/* Focus ring */
+/* Focus and active states */
 :focus {
-  outline: 2px solid rgba(201,168,106,0.25);
+  outline: 2px solid rgba(201,168,106,0.5);
   outline-offset: 3px;
 }
 
-/* Smooth image transform */
-img {
-  transition: transform 0.6s ease;
+button:active, a:active {
+  transform: scale(0.98);
 }
 
-/* Body background for luxury cream */
+/* Touch devices */
+@media (hover: none) {
+  button:hover, a:hover {
+    transform: none;
+  }
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Gallery Images */
+.gallery-image {
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* Body styles */
 body {
   background-color: var(--lux-cream);
   color: var(--lux-deep);
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Dark mode ultra-lux */
+/* Dark mode */
 .dark body {
   background-color: #0b0b0b;
   color: #eee;
 }
+
+/* Utility classes */
 .font-lux {
   font-family: "Cormorant Garamond", serif;
 }
 
+/* Touch target sizes */
+button, .btn, a[role="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem 1rem;
+}
+
+/* Form elements */
+input, select, textarea, button {
+  font-size: 1rem;
+  -webkit-appearance: none;
+  border-radius: 0.25rem;
+}
+
+/* Animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+/* Mobile menu styles */
+@media (max-width: 767px) {
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(17, 17, 17, 0.98);
+    z-index: 1000;
+    padding: 2rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .menu-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Prevent body scroll when menu is open */
+  body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}

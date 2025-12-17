@@ -22,7 +22,6 @@ export default function App() {
       <VideoSection /> {/* Video appears above Gallery */}
       <Gallery />
       <Booking />
-      <MapSection />
       <Footer />
     </div>
   );
