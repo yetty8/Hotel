@@ -11,6 +11,7 @@
   --lux-gold-600: #B88F4E;
   --lux-deep: #1A1A1A;
   --lux-softgray: #4A4A4A;
+  --lux-black: #0b0b0b;
 }
 
 /* Base styles */
@@ -43,6 +44,34 @@ h4 { font-size: 1.25rem; }  /* 20px */
   h1 { font-size: 3rem; }      /* 48px */
   h2 { font-size: 2.25rem; }   /* 36px */
   h3 { font-size: 1.75rem; }   /* 28px */
+}
+
+/* Food Card Styles */
+.food-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+}
+
+.dark .food-card {
+  background: var(--lux-black);
+}
+
+.card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  background: inherit;
 }
 
 /* Luxury Button */
@@ -100,7 +129,7 @@ body {
 
 /* Dark mode */
 .dark body {
-  background-color: #0b0b0b;
+  background-color: var(--lux-black);
   color: #eee;
 }
 

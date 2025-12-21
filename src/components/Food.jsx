@@ -59,19 +59,27 @@ export default function Food() {
       </div>
 
       {/* Food Grid */}
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {foods.map((f, i) => (
           <motion.div
             key={i}
-            className="rounded-2xl overflow-hidden shadow-luxury bg-white dark:bg-gray-900 cursor-pointer hover:scale-105 transition-transform duration-300"
+            className="food-card rounded-2xl overflow-hidden shadow-luxury cursor-pointer hover:scale-105 transition-transform duration-300"
             onClick={() => openModal(f)}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.08 }}
           >
-            <img src={f.img} alt={f.title} className="w-full h-60 object-cover" />
-            <div className="p-6 text-center">
-              <h3 className="text-xl font-semibold text-lux-midnight dark:text-lux-cream">{f.title}</h3>
+            <div className="card-image">
+              <img 
+                src={f.img} 
+                alt={f.title} 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+            <div className="card-content">
+              <h3 className="text-xl font-semibold text-lux-midnight dark:text-lux-cream text-center">
+                {f.title}
+              </h3>
             </div>
           </motion.div>
         ))}
@@ -87,22 +95,38 @@ export default function Food() {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
           >
-            <img src={food.img} alt={food.title} className="w-full h-96 object-cover" />
+            <div className="relative w-full pt-[56.25%]">
+              <img 
+                src={food.img} 
+                alt={food.title} 
+                className="absolute top-0 left-0 w-full h-full object-cover" 
+              />
+            </div>
             <div className="p-6">
-              <h3 className="text-2xl font-bold text-lux-midnight dark:text-lux-cream">{food.title}</h3>
-              <p className="mt-3 text-gray-700 dark:text-gray-300">{food.description}</p>
+              <h3 className="text-2xl font-bold text-lux-midnight dark:text-lux-cream">
+                {food.title}
+              </h3>
+              <p className="mt-3 text-gray-700 dark:text-gray-300">
+                {food.description}
+              </p>
 
-              {/* Ingredients / Notes */}
               {food.notes && food.notes.length > 0 && (
-                <ul className="mt-4 list-disc list-inside text-gray-700 dark:text-gray-300">
-                  {food.notes.map((note, idx) => (
-                    <li key={idx}>{note}</li>
-                  ))}
-                </ul>
+                <div className="mt-4">
+                  <h4 className="font-semibold text-lux-midnight dark:text-lux-cream mb-2">
+                    Ingredients:
+                  </h4>
+                  <ul className="grid grid-cols-2 gap-2 text-gray-700 dark:text-gray-300">
+                    {food.notes.map((note, idx) => (
+                      <li key={idx} className="flex items-center">
+                        <span className="w-1.5 h-1.5 bg-lux-gold rounded-full mr-2"></span>
+                        {note}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
 
-            {/* Close button with black background and hover scale */}
             <motion.button 
               onClick={closeModal} 
               className="absolute top-4 right-4 bg-black text-white p-2 rounded-full shadow-lg"

@@ -1,31 +1,19 @@
 # Aberdeen Hotel Addis
 
-A modern, responsive website for Aberdeen Hotel, featuring room bookings, gallery, and amenities.
-
-## 🚀 Features
-
+A modern, responsive website for Aberdeen Hotel Addis, featuring:
 - Responsive design for all devices
-- Interactive booking system
-- Image gallery with lightbox
-- Dark mode support
-- Smooth animations and transitions
+- Interactive UI with smooth animations
+- Online booking system
+- Photo gallery
 
-## 🛠️ Tech Stack
+## Setup
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start development server: `npm run dev`
+4. Build for production: `npm run build`
 
-- React 18
+## Technologies Used
+- React
 - Vite
 - Tailwind CSS
 - Framer Motion
-- React Icons
-
-## 📦 Prerequisites
-
-- Node.js 16+
-- npm 8+
-
-## 🚀 Getting Started
-
-1. **Clone the repository**
-   ```bash
-   git clone [https://github.com/yourusername/aberdeen-hotel-addis.git](https://github.com/yourusername/aberdeen-hotel-addis.git)
-   cd aberdeen-hotel-addis
