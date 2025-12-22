@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 
@@ -45,11 +45,30 @@ export default function Food() {
   const [open, setOpen] = useState(false);
   const [food, setFood] = useState(null);
 
-  const openModal = (f) => { setFood(f); setOpen(true); };
+  const openModal = (f) => {
+    setFood(f);
+    setOpen(true);
+  };
+
   const closeModal = () => setOpen(false);
 
+  // 🔥 FIX: ensure anchor scroll works in production
+  useEffect(() => {
+    if (window.location.hash === "#food") {
+      setTimeout(() => {
+        document.getElementById("food")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 150);
+    }
+  }, []);
+
   return (
-    <section id="food" className="py-24 bg-lux-cream dark:bg-black transition-colors">
+    <section
+      id="food"
+      className="py-24 bg-lux-cream dark:bg-black transition-colors"
+    >
       {/* Heading */}
       <div className="max-w-6xl mx-auto px-6 text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-heading font-bold text-lux-midnight dark:text-lux-cream">
@@ -67,13 +86,14 @@ export default function Food() {
             onClick={() => openModal(f)}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
           >
             <div className="card-image">
-              <img 
-                src={f.img} 
-                alt={f.title} 
-                className="w-full h-full object-cover" 
+              <img
+                src={f.img}
+                alt={f.title}
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="card-content">
@@ -96,12 +116,13 @@ export default function Food() {
             transition={{ duration: 0.3 }}
           >
             <div className="relative w-full pt-[56.25%]">
-              <img 
-                src={food.img} 
-                alt={food.title} 
-                className="absolute top-0 left-0 w-full h-full object-cover" 
+              <img
+                src={food.img}
+                alt={food.title}
+                className="absolute top-0 left-0 w-full h-full object-cover"
               />
             </div>
+
             <div className="p-6">
               <h3 className="text-2xl font-bold text-lux-midnight dark:text-lux-cream">
                 {food.title}
@@ -110,7 +131,7 @@ export default function Food() {
                 {food.description}
               </p>
 
-              {food.notes && food.notes.length > 0 && (
+              {food.notes?.length > 0 && (
                 <div className="mt-4">
                   <h4 className="font-semibold text-lux-midnight dark:text-lux-cream mb-2">
                     Ingredients:
@@ -127,8 +148,8 @@ export default function Food() {
               )}
             </div>
 
-            <motion.button 
-              onClick={closeModal} 
+            <motion.button
+              onClick={closeModal}
               className="absolute top-4 right-4 bg-black text-white p-2 rounded-full shadow-lg"
               whileHover={{ scale: 1.2 }}
               transition={{ type: "spring", stiffness: 300 }}
