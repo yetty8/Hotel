@@ -10,9 +10,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Remove react-router-dom from manual chunks
+         
           react: ['react', 'react-dom'],
-          // Add other vendor chunks if needed
+
           vendor: ['framer-motion']
         }
       }
