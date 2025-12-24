@@ -7,37 +7,37 @@ export default function Food() {
     { 
       title: "Chicken Tikka", 
       img: "/food1.jpg", 
-      description: "Juicy chicken pieces marinated in aromatic spices, grilled to perfection.",
+      description: "Juicy chicken pieces marinated in aromatic spices, grilled to perfection. Our signature dish features tender chicken breast marinated overnight in a blend of yogurt and traditional spices, then cooked in our tandoor for that authentic smoky flavor.",
       notes: ["Chicken breast pieces", "Yogurt marinade", "Garam masala", "Grilled to perfection"] 
     },
     { 
       title: "Special Pizza", 
       img: "/food2.jpg", 
-      description: "Handcrafted pizza with premium cheese, fresh vegetables, and savory toppings.",
+      description: "Handcrafted pizza with premium cheese, fresh vegetables, and savory toppings. Our 12-inch thin crust pizza is made with homemade dough, San Marzano tomato sauce, and a blend of mozzarella and parmesan cheeses.",
       notes: ["Mozzarella cheese", "Tomato sauce", "Bell peppers", "Olives", "Fresh herbs"] 
     },
     { 
       title: "Egg Sandwich", 
       img: "/food3.jpg", 
-      description: "Soft bread layered with perfectly cooked eggs and a touch of spice.",
+      description: "Soft bread layered with perfectly cooked eggs and a touch of spice. Our breakfast favorite features free-range eggs, melted cheddar, and our house-made aioli on freshly baked sourdough bread.",
       notes: ["Fresh eggs", "Whole wheat bread", "Butter", "Seasoning"] 
     },
     { 
       title: "Samosas Platter", 
       img: "/food4.jpg", 
-      description: "Crispy golden samosas served with a flavorful chutney.",
+      description: "Crispy golden samosas served with a flavorful chutney. Each order comes with four pieces of our signature samosas, filled with spiced potatoes, peas, and herbs, served with tamarind and mint chutneys.",
       notes: ["Potato & peas filling", "Flaky pastry", "Mint chutney", "Tamarind chutney"] 
     },
     { 
       title: "Special Drinks", 
       img: "/food5.jpg", 
-      description: "Signature cocktails and mocktails for a refreshing experience.",
+      description: "Signature cocktails and mocktails for a refreshing experience. Try our house specials like the Mango Tango or the Spicy Margarita, made with fresh ingredients and premium spirits.",
       notes: ["Seasonal fruits", "Herbal infusions", "Sparkling water", "Cocktail syrup"] 
     },
     { 
       title: "Fresh Juice Bar", 
       img: "/food6.jpg", 
-      description: "Juices prepared from seasonal fruits for a healthy delight.",
+      description: "Juices prepared from seasonal fruits for a healthy delight. We press our juices fresh daily, with no added sugars or preservatives. Choose from orange, carrot, apple, or our special green detox blend.",
       notes: ["Orange juice", "Carrot juice", "Apple juice", "No added sugar"] 
     }
   ];
@@ -48,11 +48,32 @@ export default function Food() {
   const openModal = (f) => {
     setFood(f);
     setOpen(true);
+    document.body.style.overflow = 'hidden';
   };
 
-  const closeModal = () => setOpen(false);
+  const closeModal = () => {
+    setOpen(false);
+    document.body.style.overflow = 'unset';
+  };
 
-  // 🔥 FIX: ensure anchor scroll works in production
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    if (open) {
+      window.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [open]);
+
+  // Scroll to section if URL has #food hash
   useEffect(() => {
     if (window.location.hash === "#food") {
       setTimeout(() => {
@@ -82,7 +103,7 @@ export default function Food() {
         {foods.map((f, i) => (
           <motion.div
             key={i}
-            className="food-card rounded-2xl overflow-hidden shadow-luxury cursor-pointer hover:scale-105 transition-transform duration-300"
+            className="food-card"
             onClick={() => openModal(f)}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -107,55 +128,53 @@ export default function Food() {
 
       {/* Modal */}
       {open && food && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm">
+        <div 
+          className="modal-overlay" 
+          onClick={closeModal}
+        >
           <motion.div
-            className="relative max-w-3xl w-full bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden"
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="relative w-full pt-[56.25%]">
+            <div className="relative">
               <img
                 src={food.img}
                 alt={food.title}
-                className="absolute top-0 left-0 w-full h-full object-cover"
+                className="modal-image"
               />
+              <button
+                onClick={closeModal}
+                className="modal-close"
+                aria-label="Close modal"
+              >
+                <FaTimes size={20} />
+              </button>
             </div>
-
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-lux-midnight dark:text-lux-cream">
-                {food.title}
-              </h3>
-              <p className="mt-3 text-gray-700 dark:text-gray-300">
-                {food.description}
-              </p>
+            
+            <div className="modal-details">
+              <h3>{food.title}</h3>
+              <p>{food.description}</p>
 
               {food.notes?.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="font-semibold text-lux-midnight dark:text-lux-cream mb-2">
+                <div>
+                  <h4 className="text-lg font-semibold mb-3 text-lux-midnight dark:text-lux-cream">
                     Ingredients:
                   </h4>
-                  <ul className="grid grid-cols-2 gap-2 text-gray-700 dark:text-gray-300">
+                  <div className="ingredients-list">
                     {food.notes.map((note, idx) => (
-                      <li key={idx} className="flex items-center">
-                        <span className="w-1.5 h-1.5 bg-lux-gold rounded-full mr-2"></span>
-                        {note}
-                      </li>
+                      <div key={idx} className="ingredient-item">
+                        <span></span>
+                        <span>{note}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
             </div>
-
-            <motion.button
-              onClick={closeModal}
-              className="absolute top-4 right-4 bg-black text-white p-2 rounded-full shadow-lg"
-              whileHover={{ scale: 1.2 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <FaTimes />
-            </motion.button>
           </motion.div>
         </div>
       )}
